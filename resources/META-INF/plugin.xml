@@ -2,14 +2,14 @@
 	<id>org.jetbrains.fernflower</id>
 	<name>Java Bytecode Decompiler (Via Fernflower)</name>
 	<description>
-		The plugin extends standard IDEA .class file viewer with powerful Fernflower decompiler -
+		The plugin extends standard .class file viewer with powerful Fernflower decompiler -
 		no more dull "{ /* compiled code */ }" in method bodies!
 	</description>
 	<version>0.1</version>
 	<vendor>JetBrains</vendor>
-	<depends>org.consulo.java</depends>
+	<depends>consulo.java</depends>
 
-	<extensions defaultExtensionNs="org.consulo.java">
+	<extensions defaultExtensionNs="consulo.java">
 		<psi.classFileDecompiler implementation="org.jetbrains.java.decompiler.IdeaDecompiler" order="last"/>
 	</extensions>
 </idea-plugin>

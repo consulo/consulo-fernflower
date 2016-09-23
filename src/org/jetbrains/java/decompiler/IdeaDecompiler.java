@@ -52,7 +52,7 @@ public class IdeaDecompiler extends ClassFileDecompilers.Light {
 
   private static final String BANNER =
       "//\n" +
-      "// Source code recreated from a .class file by IntelliJ IDEA\n" +
+      "// Source code recreated from a .class file by Consulo\n" +
       "// (powered by Fernflower decompiler)\n" +
       "//\n\n";
 

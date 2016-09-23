@@ -2,7 +2,7 @@
   <artifact name="dist">
     <output-path>$PROJECT_DIR$/out/artifacts/dist</output-path>
     <root id="root">
-      <element id="directory" name="fernflower">
+      <element id="directory" name="org.jetbrains.fernflower">
         <element id="directory" name="lib">
           <element id="zip-archive" name="fernflower-plugin.jar">
             <element id="module-production-resource-output" name="consulo-fernflower" />
