@@ -1,1 +1,1 @@
-![Build Status](http://must-be.org/vulcan/statusImage?name=consulo-fernflower)
+[![Build Status](https://ci.consulo.io/job/consulo-fernflower/badge/icon)](https://ci.consulo.io/job/consulo-fernflower/)
