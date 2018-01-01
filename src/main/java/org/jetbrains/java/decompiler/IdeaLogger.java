@@ -51,6 +51,26 @@ public class IdeaLogger extends IFernflowerLogger
 	}
 
 	@Override
+	public void writeMessage(String s, Severity severity, Throwable throwable)
+	{
+		switch(severity)
+		{
+			case TRACE:
+				LOG.debug(s, throwable);
+				break;
+			case INFO:
+				LOG.info(s, throwable);
+				break;
+			case WARN:
+				LOG.warn(s, throwable);
+				break;
+			case ERROR:
+				LOG.error(s, throwable);
+				break;
+		}
+	}
+
+	@Override
 	public void writeMessage(String message, Throwable t)
 	{
 		if(t instanceof InternalException)
