@@ -1,4 +1,4 @@
-<idea-plugin>
+<consulo-plugin>
 	<id>org.jetbrains.fernflower</id>
 	<name>Java Bytecode Decompiler (Via Fernflower)</name>
 	<description>
@@ -12,4 +12,4 @@
 	<extensions defaultExtensionNs="consulo.java">
 		<psi.classFileDecompiler implementation="org.jetbrains.java.decompiler.IdeaDecompiler" order="last"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>

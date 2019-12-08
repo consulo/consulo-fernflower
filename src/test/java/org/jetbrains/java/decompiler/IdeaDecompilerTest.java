@@ -15,29 +15,21 @@
  */
 package org.jetbrains.java.decompiler;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileVisitor;
-import com.intellij.psi.JavaRecursiveElementWalkingVisitor;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiClassInitializer;
-import com.intellij.psi.PsiCodeBlock;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiMethod;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.compiled.ClsFileImpl;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
+import java.io.IOException;
 
 public class IdeaDecompilerTest extends LightCodeInsightFixtureTestCase
 {
@@ -120,11 +112,7 @@ public class IdeaDecompilerTest extends LightCodeInsightFixtureTestCase
 
 	public void testStubCompatibilityIdea()
 	{
-		String path = PathManager.getHomePath() + "/out/production";
-		if(!new File(path).exists())
-		{
-			path = PathManager.getHomePath() + "/out/classes/production";
-		}
+		String path = new File("").getPath();
 		VirtualFile dir = StandardFileSystems.local().refreshAndFindFileByPath(path);
 		assertNotNull(path, dir);
 		doTestStubCompatibility(dir);
