@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 
-public class IdeaDecompilerTest extends LightCodeInsightFixtureTestCase
+public abstract class IdeaDecompilerTest extends LightCodeInsightFixtureTestCase
 {
 	public void testSimple()
 	{
