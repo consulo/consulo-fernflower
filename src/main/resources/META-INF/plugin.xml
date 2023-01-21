@@ -13,8 +13,4 @@
 		<tag>editor.extension</tag>
 		<tag>tools</tag>
 	</tags>
-
-	<extensions defaultExtensionNs="consulo.java">
-		<psi.classFileDecompiler implementation="org.jetbrains.java.decompiler.IdeaDecompiler" order="last"/>
-	</extensions>
 </consulo-plugin>

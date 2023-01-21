@@ -15,8 +15,8 @@
  */
 package org.jetbrains.java.decompiler;
 
+import consulo.logging.Logger;
 import org.jetbrains.java.decompiler.main.extern.IFernflowerLogger;
-import com.intellij.openapi.diagnostic.Logger;
 
 public class IdeaLogger extends IFernflowerLogger
 {

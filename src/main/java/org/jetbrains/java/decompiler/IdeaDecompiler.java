@@ -15,40 +15,42 @@
  */
 package org.jetbrains.java.decompiler;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.jar.Manifest;
-
+import com.intellij.java.language.impl.JavaClassFileType;
+import com.intellij.java.language.impl.JavaFileType;
+import com.intellij.java.language.impl.psi.impl.compiled.ClsFileImpl;
+import com.intellij.java.language.psi.compiled.ClassFileDecompiler;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.execution.ui.console.LineNumbersMapping;
+import consulo.fernflower.ExactMatchLineNumbersMapping;
+import consulo.internal.org.objectweb.asm.ClassReader;
+import consulo.internal.org.objectweb.asm.ClassVisitor;
+import consulo.internal.org.objectweb.asm.Opcodes;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CodeStyleSettingsManager;
+import consulo.language.codeStyle.CommonCodeStyleSettings;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.project.ProjectManager;
+import consulo.util.io.FileUtil;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
+import consulo.virtualFileSystem.VirtualFile;
+import jakarta.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.java.decompiler.main.decompiler.BaseDecompiler;
 import org.jetbrains.java.decompiler.main.extern.IBytecodeProvider;
 import org.jetbrains.java.decompiler.main.extern.IFernflowerLogger;
 import org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences;
 import org.jetbrains.java.decompiler.main.extern.IResultSaver;
-import consulo.internal.org.objectweb.asm.ClassReader;
-import consulo.internal.org.objectweb.asm.ClassVisitor;
-import consulo.internal.org.objectweb.asm.Opcodes;
-import com.intellij.execution.filters.LineNumbersMapping;
-import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.DefaultProjectFactory;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.compiled.ClassFileDecompilers;
-import com.intellij.psi.impl.compiled.ClsFileImpl;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.fernflower.ExactMatchLineNumbersMapping;
 
-public class IdeaDecompiler extends ClassFileDecompilers.Light
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.Manifest;
+
+@ExtensionImpl(id = "fernflower")
+public class IdeaDecompiler extends ClassFileDecompiler.Light
 {
 	private static final Logger LOG = Logger.getInstance(IdeaDecompiler.class);
 
@@ -57,7 +59,8 @@ public class IdeaDecompiler extends ClassFileDecompilers.Light
 	private final IFernflowerLogger myLogger = new IdeaLogger();
 	private final HashMap<String, Object> myOptions = new HashMap<>();
 
-	public IdeaDecompiler()
+	@Inject
+	public IdeaDecompiler(ProjectManager projectManager)
 	{
 		myOptions.put(IFernflowerPreferences.HIDE_DEFAULT_CONSTRUCTOR, "0");
 		myOptions.put(IFernflowerPreferences.DECOMPILE_GENERIC_SIGNATURES, "1");
@@ -67,7 +70,7 @@ public class IdeaDecompiler extends ClassFileDecompilers.Light
 		myOptions.put(IFernflowerPreferences.NEW_LINE_SEPARATOR, "1");
 		myOptions.put(IFernflowerPreferences.BYTECODE_SOURCE_MAPPING, "1");
 
-		Project project = DefaultProjectFactory.getInstance().getDefaultProject();
+		Project project = projectManager.getDefaultProject();
 		CodeStyleSettings settings = CodeStyleSettingsManager.getInstance(project).getCurrentSettings();
 		CommonCodeStyleSettings.IndentOptions options = settings.getIndentOptions(JavaFileType.INSTANCE);
 		myOptions.put(IFernflowerPreferences.INDENT_STRING, StringUtil.repeat(" ", options.INDENT_SIZE));
@@ -90,7 +93,7 @@ public class IdeaDecompiler extends ClassFileDecompilers.Light
 
 		try
 		{
-			Map<String, VirtualFile> files = ContainerUtil.newLinkedHashMap();
+			Map<String, VirtualFile> files = new HashMap<>();
 			files.put(file.getPath(), file);
 			String mask = file.getNameWithoutExtension() + "$";
 			for(VirtualFile child : file.getParent().getChildren())

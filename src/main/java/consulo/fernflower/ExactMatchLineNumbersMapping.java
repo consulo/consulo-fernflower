@@ -1,6 +1,6 @@
 package consulo.fernflower;
 
-import com.intellij.execution.filters.LineNumbersMapping;
+import consulo.execution.ui.console.LineNumbersMapping;
 
 /**
  * @author VISTALL
