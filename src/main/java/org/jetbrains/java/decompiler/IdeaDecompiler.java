@@ -139,7 +139,7 @@ public class IdeaDecompiler extends ClassFileDecompiler.Light
 		final Ref<Boolean> isGroovy = Ref.create(false);
 		try
 		{
-			new ClassReader(file.contentsToByteArray()).accept(new ClassVisitor(Opcodes.ASM5)
+			new ClassReader(file.contentsToByteArray()).accept(new ClassVisitor(Opcodes.API_VERSION)
 			{
 				@Override
 				public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
