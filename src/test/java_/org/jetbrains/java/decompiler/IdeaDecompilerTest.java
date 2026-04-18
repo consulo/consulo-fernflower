@@ -15,16 +15,19 @@
  */
 package org.jetbrains.java.decompiler;
 
-import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.StandardFileSystems;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileVisitor;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.compiled.ClsFileImpl;
+import com.intellij.java.language.impl.JavaClassFileType;
+import com.intellij.java.language.impl.psi.impl.compiled.ClsFileImpl;
+import com.intellij.java.language.psi.*;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementFactory;
+import consulo.language.psi.PsiFile;
+import consulo.util.io.FileUtil;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.StandardFileSystems;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.virtualFileSystem.util.VirtualFileVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -128,7 +131,7 @@ public abstract class IdeaDecompilerTest extends LightCodeInsightFixtureTestCase
 		final int pathStart = root.getPath().length();
 		final boolean compare = textPath != null && new File(textPath).exists();
 
-		VfsUtilCore.visitChildrenRecursively(root, new VirtualFileVisitor()
+		VirtualFileUtil.visitChildrenRecursively(root, new VirtualFileVisitor()
 		{
 			@Override
 			public boolean visitFile(@NotNull VirtualFile file)
